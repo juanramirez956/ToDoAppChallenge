@@ -7,5 +7,7 @@
     <string name="task">Task</string>
     <string name="AddTask">Add TodoItem</string>
     <string name="Add">Add Task</string>
+    <string name="hintTxtItem">Type a task!</string>
+    <string name="lblBtnAdd">Add Task!</string>
 
 </resources>

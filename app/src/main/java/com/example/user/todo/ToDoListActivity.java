@@ -12,8 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ToDoListActivity extends ActionBarActivity {
@@ -57,8 +61,14 @@ public class ToDoListActivity extends ActionBarActivity {
      */
     public static class TodoListFragment extends Fragment {
 
+        ArrayAdapter<String> mAdapter;
+        List<String> todoList = new ArrayList<String>();
+        EditText edtTask;
+
         public TodoListFragment() {
         }
+
+
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -66,11 +76,14 @@ public class ToDoListActivity extends ActionBarActivity {
             setHasOptionsMenu(true);
         }
 
+
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_to_do_list, container, false);
             prepareListView(rootView);
+            edtTask =  (EditText)rootView.findViewById(R.id.txtItem);
             return rootView;
         }
 
@@ -82,9 +95,9 @@ public class ToDoListActivity extends ActionBarActivity {
 
         private void prepareListView(View rootView) {
             final ListView listView = (ListView)rootView.findViewById(R.id.listview);
-            String[] todoArray = {"wash car","buy pot","buy Wiskey"};
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_todo,todoArray);
-            listView.setAdapter(adapter);
+
+            mAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_todo,todoList);
+            listView.setAdapter(mAdapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -94,6 +107,29 @@ public class ToDoListActivity extends ActionBarActivity {
                 }
             });
 
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int menuId = item.getItemId();
+            Boolean handled=false;
+            switch (menuId){
+                case R.id.add_todo:
+                    if(!edtTask.getText().toString().isEmpty())
+                    {
+                        todoList.add(edtTask.getText().toString());
+                        mAdapter.notifyDataSetChanged();
+                        edtTask.setText("");
+                    }
+                handled = true;
+                break;
+            }
+            if(!handled)
+            {
+             handled = super.onOptionsItemSelected(item);
+            }
+
+            return handled;
         }
     }
 }
