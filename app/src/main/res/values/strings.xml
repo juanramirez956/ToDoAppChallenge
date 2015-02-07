@@ -9,5 +9,6 @@
     <string name="Add">Add Task</string>
     <string name="hintTxtItem">Type a task!</string>
     <string name="lblBtnAdd">Add Task!</string>
+    <string name="emptylist">No task added.</string>
 
 </resources>

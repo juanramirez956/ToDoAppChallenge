@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class ToDoListActivity extends ActionBarActivity {
         ArrayAdapter<String> mAdapter;
         List<String> todoList = new ArrayList<String>();
         EditText edtTask;
+        TextView txvEmpty;
 
         public TodoListFragment() {
         }
@@ -83,7 +85,8 @@ public class ToDoListActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_to_do_list, container, false);
             prepareListView(rootView);
-            edtTask =  (EditText)rootView.findViewById(R.id.txtItem);
+           // edtTask =  (EditText)rootView.findViewById(R.id.txtItem);
+            txvEmpty = (TextView)rootView.findViewById(R.id.empty);
             return rootView;
         }
 
@@ -94,7 +97,7 @@ public class ToDoListActivity extends ActionBarActivity {
         }
 
         private void prepareListView(View rootView) {
-            final ListView listView = (ListView)rootView.findViewById(R.id.listview);
+            final ListView listView = (ListView)rootView.findViewById(R.id.list);
 
             mAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_todo,todoList);
             listView.setAdapter(mAdapter);
@@ -107,7 +110,10 @@ public class ToDoListActivity extends ActionBarActivity {
                 }
             });
 
+
+
         }
+
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -115,12 +121,12 @@ public class ToDoListActivity extends ActionBarActivity {
             Boolean handled=false;
             switch (menuId){
                 case R.id.add_todo:
-                    if(!edtTask.getText().toString().isEmpty())
+                   /* if(!edtTask.getText().toString().isEmpty())
                     {
-                        todoList.add(edtTask.getText().toString());
-                        mAdapter.notifyDataSetChanged();
-                        edtTask.setText("");
-                    }
+                        //todoList.add(edtTask.getText().toString());
+                       // mAdapter.notifyDataSetChanged();
+                        //edtTask.setText("");
+                    }*/
                 handled = true;
                 break;
             }
