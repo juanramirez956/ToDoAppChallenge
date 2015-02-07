@@ -62,8 +62,8 @@ public class ToDoListActivity extends ActionBarActivity {
      */
     public static class TodoListFragment extends Fragment {
 
-        ArrayAdapter<String> mAdapter;
-        List<String> todoList = new ArrayList<String>();
+        TodoListAdapter mAdapter;
+        List<Task> todoList = new ArrayList<>();
         EditText edtTask;
         TextView txvEmpty;
 
@@ -99,14 +99,14 @@ public class ToDoListActivity extends ActionBarActivity {
         private void prepareListView(View rootView) {
             final ListView listView = (ListView)rootView.findViewById(R.id.list);
 
-            mAdapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item_todo,todoList);
+            mAdapter = new TodoListAdapter(getActivity(),todoList);
             listView.setAdapter(mAdapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String task = (String) parent.getItemAtPosition(position).toString();
-                    Log.d("test", task);
-                    Toast.makeText(getActivity(), task, Toast.LENGTH_LONG);
+                    //String Title = (Task) parent.getItemAtPosition(position).toString();
+                    Log.d("test", "hice click");
+                    //Toast.makeText(getActivity(), task, Toast.LENGTH_LONG);
                 }
             });
 
@@ -121,13 +121,12 @@ public class ToDoListActivity extends ActionBarActivity {
             Boolean handled=false;
             switch (menuId){
                 case R.id.add_todo:
-                   /* if(!edtTask.getText().toString().isEmpty())
-                    {
-                        //todoList.add(edtTask.getText().toString());
-                       // mAdapter.notifyDataSetChanged();
-                        //edtTask.setText("");
-                    }*/
-                handled = true;
+                    Task task = new Task();
+                    task.setTitle("TITULO PENDEJO");
+                    task.setDescription("que pendejada de tarea");
+                    todoList.add(task);
+                    mAdapter.notifyDataSetChanged();
+                    handled = true;
                 break;
             }
             if(!handled)
