@@ -10,5 +10,9 @@
     <string name="hintTxtItem">Type a task!</string>
     <string name="lblBtnAdd">Add Task!</string>
     <string name="emptylist">No task added.</string>
+    <string name="title_activity_create_task">Create Task</string>
+    <string name="title">Title</string>
+    <string name="done">Done</string>
+    <string name="canceled_message">cancel</string>
 
 </resources>

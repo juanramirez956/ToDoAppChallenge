@@ -1,5 +1,7 @@
 package com.example.user.todo;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -62,6 +64,7 @@ public class ToDoListActivity extends ActionBarActivity {
      */
     public static class TodoListFragment extends Fragment {
 
+        public static final int REQUEST_CODE = 0;
         TodoListAdapter mAdapter;
         List<Task> todoList = new ArrayList<>();
         EditText edtTask;
@@ -121,11 +124,8 @@ public class ToDoListActivity extends ActionBarActivity {
             Boolean handled=false;
             switch (menuId){
                 case R.id.add_todo:
-                    Task task = new Task();
-                    task.setTitle("TITULO PENDEJO");
-                    task.setDescription("que pendejada de tarea");
-                    todoList.add(task);
-                    mAdapter.notifyDataSetChanged();
+                    Intent createTaskActivity = new Intent(getActivity(), CreateTaskActivity.class);
+                    startActivityForResult(createTaskActivity, REQUEST_CODE);
                     handled = true;
                 break;
             }
@@ -135,6 +135,22 @@ public class ToDoListActivity extends ActionBarActivity {
             }
 
             return handled;
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            switch (resultCode){
+                case Activity.RESULT_OK:
+                    Task task = new Task();
+                    task.setTitle(data.getStringExtra(CreateTaskActivity.NEW_TASK_DESCRIPTION));
+                    todoList.add(task);
+                    mAdapter.notifyDataSetChanged();
+                    break;
+                case Activity.RESULT_CANCELED:
+                    Toast.makeText(getActivity(), R.string.canceled_message, Toast.LENGTH_LONG).show();
+                    break;
+            }
         }
     }
 }
